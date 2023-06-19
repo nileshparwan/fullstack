@@ -1,0 +1,15 @@
+{
+    "api": {
+        "domain": "http://localhost:9000",
+        "feature": {
+            "signup": "/api/users/signup", 
+            "login":"/api/users/login",
+            "getUsers": "/api/users",
+            "places": "/api/places",
+            "userPlacesById": "/api/places/user/#{userId}",
+            "updatePlaceById":"/api/places/#{placeId}",
+            "getPlacesById":"/api/places/#{placeId}",
+            "deletePlaceById":"/api/places/#{placeId}"
+        }
+    }
+}
