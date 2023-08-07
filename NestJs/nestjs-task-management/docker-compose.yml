@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: postgres-dev-db
+    image: postgres:13
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: dev-task-management
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      NODE_ENV: stage
+      PGHOST: localhost
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+  # admirer: 
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
