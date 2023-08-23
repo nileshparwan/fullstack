@@ -6,12 +6,16 @@ const { graphqlHTTP } = require('express-graphql');
 const connectDB = require('./mongoDb/connectDb');
 const graphqlSchema = require('./graphql/schema/index'); 
 const graphqlResolvers = require('./graphql/resolvers/index'); 
+const isAuth = require('./middlewares/isAuth');
 
 // variable
 const app = express();
 
 // middlewares
 app.use(bodyParser.json());
+
+// check user authentication
+app.use(isAuth);
 
 // with graphql you have only one endpoint which graphql is sent. 
 // 1. graphql endpoint, it can be anything, "/graphql", "/app", "/sth"

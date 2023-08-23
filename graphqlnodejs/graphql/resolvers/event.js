@@ -23,15 +23,19 @@ module.exports = {
             };
         });
     },
-    createEvent: async (args) => {
+    createEvent: async (args, req) => { // default argument req
         let data, user;
+
+        if (!req.isAuth) {
+            throw new Error("Unauthenticated!");
+        }
 
         const event = new Event({
             title: args.eventInput.title,
             description: args.eventInput.description,
             price: +args.eventInput.price,
             date: dateToString(args.eventInput.date),
-            creator: "64e64caf11f62caee389e715"
+            creator: req.userId
         });
 
         // Validate the date value before saving the event
@@ -46,7 +50,7 @@ module.exports = {
         }
 
         try {
-            user = await User.findById("64e64caf11f62caee389e715");
+            user = await User.findById(req.userId);
         } catch (err) {
             throw new Error("Couldn't query user");
         }

@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 const User = require("../../mongoDb/models/user");
 // all resolvers function in it. and resolvers function must reach out schemas endpoint by name
 
@@ -51,5 +52,40 @@ module.exports = {
             _id: data.id
         };
     },
+    login: async ({ email, password }) => {
+        let user, passwordIsEqual;
 
+        try {
+            user = await User.findOne({ email: email });
+        } catch (err) {
+            throw new Error("Could not query user. Please try again later");
+        }
+
+        if (!user) {
+            throw new Error("Invalid credential!");
+        }
+
+        try {
+            passwordIsEqual = await bcrypt.compare(password, user.password);
+        } catch (err) {
+            throw new Error("Password verification failed");
+        }
+
+        if (!passwordIsEqual) {
+            throw new Error("Invalid credentials!");
+        }
+
+        const token = jwt.sign(
+            { userId: user.id, email },
+            "somesupersecretkey",
+            { expiresIn: "1h" }
+        );
+
+        
+        return {
+            userId: user.id,
+            token,
+            tokenExpiration: 1
+        }
+    }
 };

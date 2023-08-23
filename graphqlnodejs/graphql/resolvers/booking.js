@@ -6,8 +6,12 @@ const { FindUserByIdHandler, singleEvent } = require("./merge");
 // all resolvers function in it. and resolvers function must reach out schemas endpoint by name
 
 module.exports = {
-    bookings: async () => {
+    bookings: async (req) => {
         let bookings;
+
+        if (!req.isAuth) {
+            throw new Error("Unauthenticated!");
+        }
 
         try {
             bookings = await Booking.find();
@@ -30,8 +34,12 @@ module.exports = {
             };
         });
     },
-    cancelBooking: async (args) => {
+    cancelBooking: async (args, req) => {
         let booking, event;
+
+        if (!req.isAuth) {
+            throw new Error("Unauthenticated!");
+        }
 
         try {
             booking = await Booking.findById(args.bookingId).populate("event");
@@ -57,8 +65,12 @@ module.exports = {
 
         return event;
     },
-    bookEvent: async (args) => {
+    bookEvent: async (args, req) => {
         let fetchEvent, result;
+
+        if (!req.isAuth) {
+            throw new Error("Unauthenticated!");
+        }
 
         try {
             fetchEvent = await Event.findOne({ _id: args.eventId });
