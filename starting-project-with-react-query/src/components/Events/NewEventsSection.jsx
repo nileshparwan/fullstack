@@ -9,6 +9,10 @@ export default function NewEventsSection() {
   const {data, isError, error, isPending} = useQuery({
     queryKey: ['events'], // could contain multiple values, can also have object and arrays
     queryFn: fetchEvents,
+    staleTime: 5000, // this controls after which time react query will send a behind the scene request to get updated data if it found a data
+                    // in your cache and the default is 0, if you set it to 5000, it will wait for 5000ms seconds before sending another request
+    //gcTime: 30000   // garbage collection time, this controls how long the data in the cache will be kept around and the default here is 5 mins => 50 000 ms
+                      // but you can also update it to 3 min, 30000 ms
   });
 
   let content;
