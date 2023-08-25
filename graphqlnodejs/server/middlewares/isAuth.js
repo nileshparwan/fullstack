@@ -3,10 +3,6 @@ const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
     let decodedToken;
 
-    if (req.method === "OPTIONS") {
-        return next();
-    }
-
     const authHeader = req.get("Authorization");
 
     if (!authHeader) {

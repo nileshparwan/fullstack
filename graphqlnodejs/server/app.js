@@ -11,6 +11,37 @@ const isAuth = require('./middlewares/isAuth');
 // variable
 const app = express();
 
+const allowedDomains = [];
+
+// cors 
+app.use((req, res, next)=>{
+
+    if (allowedDomains.length > 0) {
+        const origin = req.get("origin");
+        if (allowedDomains.includes(origin)) {
+            res.setHeader("Access-Control-Allow-Origin", origin);
+        } else {
+            res.setHeader("Access-Control-Allow-Origin", "null"); // Change to your fallback origin
+        }
+    } else {
+        res.setHeader(
+            "Access-Control-Allow-Origin",
+            "*"
+        );
+    }
+
+    // Other CORS headers
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(200)
+        // return next();
+    }
+
+    next();
+})
+
 // middlewares
 app.use(bodyParser.json());
 
@@ -33,7 +64,7 @@ app.use(
 // db 
 connectDB();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

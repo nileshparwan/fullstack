@@ -40,16 +40,15 @@ module.exports = {
         });
 
         try {
-            const result = await user.save();
-            data = result._doc;
+            data = await user.save();
         } catch (err) {
             throw new Error("Couldn't create new user");
         }
 
         return {
-            ...data,
+            ...data._doc,
+            _id: data.id,
             password: null,
-            _id: data.id
         };
     },
     login: async ({ email, password }) => {
