@@ -1,3 +1,9 @@
+import {
+  QueryClient,
+} from '@tanstack/react-query';
+
+export const queryClient = new QueryClient()
+
 /**
  * ReactQuery by default passes an object to your @fetchEvents function, 
  * and the data is an object that gives us the information of the queryKey
@@ -5,8 +11,6 @@
  * for aborting that request if for example you navigate away from this page
  * before the request was finished
  */
-
-
 export async function fetchEvents({signal, searchTerm}) {
   let url = "http://localhost:3000/events"; 
 

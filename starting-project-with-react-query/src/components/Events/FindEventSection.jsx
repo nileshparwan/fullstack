@@ -15,7 +15,7 @@ export default function FindEventSection() {
    * @isLoading will not be true, if the query is just disabled ( enabled = false )
    */
   const {data, isPending, isLoading, error, isError} = useQuery({
-   queryKey:["event", {search: searchTerm}],
+   queryKey:["events", {search: searchTerm}],
    queryFn: ({signal}) => fetchEvents({signal, searchTerm}),
    enabled: searchTerm !== undefined // here, excute the query only when there is a search value. 
   })
