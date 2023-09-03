@@ -23,7 +23,7 @@ export default function NewEventsSection() {
 
   if (isError) {
     content = (
-      <ErrorBlock title="An error occurred" message={error.info.message || "Failed to fetch events"} />
+      <ErrorBlock title="An error occurred" message={error.info?.message || "Failed to fetch events"} />
     );
   }
 
