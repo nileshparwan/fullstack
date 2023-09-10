@@ -10,6 +10,7 @@ export default function FindEventSection() {
   const searchElement = useRef();
   const [searchTerm, setSearchTerm] = useState()
 
+  // todo: read on enabled 
   /**
    * The difference between @isLading and @isPending is that 
    * @isLoading will not be true, if the query is just disabled ( enabled = false )

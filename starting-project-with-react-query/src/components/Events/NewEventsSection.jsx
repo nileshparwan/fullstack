@@ -6,6 +6,8 @@ import EventItem from './EventItem.jsx';
 import { fetchEvents } from '../utils/http.js';
 
 export default function NewEventsSection() {
+
+  // todo: read on staleTime and gcTime
   const {data, isError, error, isPending} = useQuery({
     queryKey: ['events'], // could contain multiple values, can also have object and arrays
     queryFn: fetchEvents,
